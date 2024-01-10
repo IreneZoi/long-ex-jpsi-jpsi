@@ -22,7 +22,7 @@ title: Setup
 > ~~~
 > https://github.com/IreneZoi/DAS2024JpsiJpsi.git
 > ~~~
-> Do this step from after opening this link in a broweser, selecting `fork` button, and then selecing `create fork`.
+> Do this step after opening this link in a browser, selecting `fork` button, and then selecting `create fork`.
 > 
 > You should aim to commit and push your changes that you make in the code frequently.
 > 
@@ -38,7 +38,7 @@ title: Setup
 > git add <filename>
 > ~~~
 > 
-> Committing the staged files with a breif but useful commit message:
+> Committing the staged files with a brief but useful commit message:
 > ~~~bash
 > git commit -m "your message in quotes"
 > ~~~
@@ -53,6 +53,8 @@ title: Setup
 > ~~~bash
 > ssh -Y USERNAME@cmslpc-sl7.fnal.gov
 > cd ~/nobackup/
+> mkdir CMSDAS2024
+> cd CMSDAS2024
 > git clone https://github.com/<USERNAME>/DAS2024JpsiJpsi.git
 > cd DAS2024JpsiJpsi
 > source /cvmfs/cms.cern.ch/cmsset_default.sh

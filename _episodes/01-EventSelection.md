@@ -1,9 +1,18 @@
 ---
-title: "CMSDAS Long Exercise: Exercise 1: Event selection "
+title: "Exercise 1: Event selection "
 teaching: 30
 exercises: Wednesday
 questions:
 - Event selections for 4 muon mass spectrum
+objectives:
+- perform selections on root variables
+- fill histograms
+keypoints:
+- In this exercise we made practical event selections using ROOTs Lorentz Vectors
+- We used these selections to calculate mass variables
+- Filled histograms and produced distributions of important variables in the analysis
+- Learned how to compile and run root macros
+- Gained experience with cpp syntax
 
 ---
 
@@ -26,9 +35,9 @@ Our first step now is to filter data contained in the ntuple file.
 
 Make sure to get into the CMSSW directory and set up the cmssw environment. Then move to the `eventselection/` directory from the git repo that was cloned in the setup steps.
 
-For example:
+For example (you may need to change the directory):
 ~~~bash
-cd ~/nobackup/CMSDAS2024JpsiJpsi/CMSSW_10_2_5/src
+cd ~/nobackup/CMSDAS2024/DAS2024JpsiJpsi/CMSSW_10_2_5/src
 cmsenv
 cd ../../eventselection/
 ~~~
@@ -39,7 +48,7 @@ It is worth noting that only four-momentum and partial selections are provided i
 > Feel free to first add the variables and see how the distributions change once you add the different selections!
 {: .checklist}
 
-The selections can be added at [here in the code](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/cd44732cc0b87f5fb9cc9791d4bbc4c6650cde4e/eventselection/myntuple.C#L146):
+The selections can be added at [here in the code](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/c429c15693d6b5db0d7720387b4ff38db08f8280/eventselection/myntuple.C#L149):
 
 The variable used for the muons is `rawMup4vect`. You can use `rawMup4vect[i]` with `i` going from 0 to 3 to select the 4 different muons. 
 
@@ -48,7 +57,7 @@ The variable used for the muons is `rawMup4vect`. You can use `rawMup4vect[i]` w
 > 
 > have a look in `myntuple.C` before confirming the answer.
 > > ### answer
-> > found in the [code](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/main/eventselection/myntuple.C#L93): 
+> > found in the [code](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/c429c15693d6b5db0d7720387b4ff38db08f8280/eventselection/myntuple.C#L93): 
 > > ~~~cpp
 > > vector<TLorentzVector> rawMup4vect
 > > ~~~
@@ -108,17 +117,17 @@ The variable used for the muons is `rawMup4vect`. You can use `rawMup4vect[i]` w
 > ## Challenge: two further selections
 > We are interested in looking at the distributions of:
 > * 2 pairs of muons with opposite charges 
-> * with a mass in the Jpsi mass range. 
+> * with a mass in the J/psi mass range. 
 {: .challenge}
 
-The first of these two selections should be [implemented here](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/cd1e79157a052e720c7660f358bef35967bed08e/eventselection/myntuple.C#L159) while the [second one should be added here](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/cd44732cc0b87f5fb9cc9791d4bbc4c6650cde4e/eventselection/myntuple.C#L166)
+The first of these two selections should be [implemented here](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/c429c15693d6b5db0d7720387b4ff38db08f8280/eventselection/myntuple.C#L157) while the [second one should be added here](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/c429c15693d6b5db0d7720387b4ff38db08f8280/eventselection/myntuple.C#L168)
 
 
 > ## Note
-> A simplified solution of looping through the some combinations of muons in the event is implented in the code
+> A simplified solution of looping through the some combinations of muons in the event is implemented in the code
 > 
-> A paired muon index is defined [here](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/cd44732cc0b87f5fb9cc9791d4bbc4c6650cde4e/eventselection/myntuple.C#L132)
-> and the loop over the combinations starts [here](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/cd44732cc0b87f5fb9cc9791d4bbc4c6650cde4e/eventselection/myntuple.C#L148).
+> A paired muon index is defined [here](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/c429c15693d6b5db0d7720387b4ff38db08f8280/eventselection/myntuple.C#L132)
+> and the loop over the combinations starts [here](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/c429c15693d6b5db0d7720387b4ff38db08f8280/eventselection/myntuple.C#L151).
 >
 > use the indices assigned in the loop (`muIdxp11, muIdxp12, muIdxp21, muIdxp22`) to look at different pairs of muons
 > > ### one muons charge 
@@ -150,11 +159,32 @@ Please take some time to work out a solution and cross check the implementation 
 
 After implementing selection, we want to look at some distributions
 
-> ## Challenge
+> ## Challenge: filling histograms
 > The variables we will focus on in this exercise are:
->    * The mass of each muon pair ([to be added in the code here](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/cd44732cc0b87f5fb9cc9791d4bbc4c6650cde4e/eventselection/myntuple.C#L160-L161))
->    * The mass of 4 muons ( M(µ1µ2µ3µ4)-M(µ1µ2)-M(µ3µ4)+2*M(J/psi) ) ([to be added in the code here](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/cd44732cc0b87f5fb9cc9791d4bbc4c6650cde4e/eventselection/myntuple.C#L170))
+>    * The mass of each muon pair ([to be added in the code here](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/c429c15693d6b5db0d7720387b4ff38db08f8280/eventselection/myntuple.C#L162-L163))
+>    * The mass of 4 muons ( M(µ1µ2µ3µ4)-M(µ1µ2)-M(µ3µ4)+2*M(J/psi) ) ([to be added in the code here](https://github.com/IreneZoi/DAS2024JpsiJpsi/blob/c429c15693d6b5db0d7720387b4ff38db08f8280/eventselection/myntuple.C#L171))
 {: .challenge}
+> 
+> ## Solutions
+> > ### First muon mass pair definition
+> > ~~~cpp
+> > DiMuonMass1 = (fitMup4vect[muIdxp11] + fitMup4vect[muIdxp12]).M();
+> > ~~~
+> {: .solution2}
+> > ### Second muon mass pair definition
+> > ~~~cpp
+> > DiMuonMass2 = (fitMup4vect[muIdxp21] + fitMup4vect[muIdxp22]).M();
+> > ~~~
+> {: .solution2}
+> > ### Four muon mass
+> > ~~~cpp
+> > m4Muon = (fitMup4vect[muIdxp11]+fitMup4vect[muIdxp12]+fitMup4vect[muIdxp21]+fitMup4vect[muIdxp22]).M()
+                    - (fitMup4vect[muIdxp11] + fitMup4vect[muIdxp12]).M()
+                    - (fitMup4vect[muIdxp21] + fitMup4vect[muIdxp22]).M()
+                    + JPSI_MASS + JPSI_MASS;
+> > ~~~
+> {: .solution2}
+{: .solution}
 
 > ## Extra Challenge
 > If you have time, you could check the difference in the distributions using the `fitMup4vect` variable instead of the raw one. Do you notice any difference?
@@ -162,7 +192,7 @@ After implementing selection, we want to look at some distributions
 
 ## Running the code
 
-After myntuple.C changed, you need to open root.
+After editing the `myntuple.C` macro, we need to compile (or recompile) the code in to a shared library.
 
 ~~~bash
 root -l
@@ -197,16 +227,16 @@ root [2]  .x runJobs_0.C
 
 ~~~output
 Processing runJobs_0.C...
-I am running 0th entries out of 1016991 total entries
-I am running 10000th entries out of 1016991 total entries
-I am running 20000th entries out of 1016991 total entries
-I am running 30000th entries out of 1016991 total entries
-I am running 40000th entries out of 1016991 total entries
-I am running 50000th entries out of 1016991 total entries
-I am running 60000th entries out of 1016991 total entries
-I am running 70000th entries out of 1016991 total entries
-I am running 80000th entries out of 1016991 total entries
-I am running 90000th entries out of 1016991 total entries
+I am running 0th entries out of 1296200 total entries
+I am running 10000th entries out of 1296200 total entries
+I am running 20000th entries out of 1296200 total entries
+I am running 30000th entries out of 1296200 total entries
+I am running 40000th entries out of 1296200 total entries
+I am running 50000th entries out of 1296200 total entries
+I am running 60000th entries out of 1296200 total entries
+I am running 70000th entries out of 1296200 total entries
+I am running 80000th entries out of 1296200 total entries
+I am running 90000th entries out of 1296200 total entries
 ......
 root [3]
 ~~~

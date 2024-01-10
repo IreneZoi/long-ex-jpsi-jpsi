@@ -20,12 +20,16 @@ keypoints:
 
 ## Fit setup
 ~~~
-cd ~/nobackup/CMSDAS2024JpsiJpsi/CMSSW_11_1_1/src/
+cd ~/nobackup/CMSDAS2024/DAS2024JpsiJpsi/CMSSW_11_1_1/src/
 cmsenv
 cd ../../fitpackage/
+mkdir figure/
 # Then you need to compile the pre-defined fit functions
 source makeLibSo.sh
+~~~
+{: .language-bash}
 
+~~~output
 # you should see this output:
 Processing BlattWeisskopfQ2.cxx+...
 Info in <TUnixSystem::ACLiC>: creating shared library /uscms_data/d3/lchen/cmsdas2024/CMSSW_11_1_1/src/fitpackage/./BlattWeisskopfQ2_cxx.so
@@ -38,7 +42,8 @@ Processing MyRelBWSquare.cxx+...
 
 ......
 ~~~
-{: .language-bash}
+
+There are few `Warnings` for some library builds at the end of the print out that should be ignored.
 
 ## The background fit
 
@@ -68,7 +73,7 @@ root -l null.C
 It will take a few minutes to run the code and it will produce a long printout on the screen. The important informations are summarized at the end and the plot will be stored in `figure/fit_null.pdf`.
 
 > ## Your fit should look like this
-> <a href="../files/null.pdf"><img src = "../files/null.pdf" alt="background fit" width ="500"></a>
+> <a href="../files/fit_null.png"><img src = "../files/fit_null.png" alt="background fit" width ="500"></a>
 {: .solution}
 
 > ## Questions 
